@@ -3,6 +3,8 @@ package com.back_end_Journey.back_end_Journey.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
+
 
 @Entity
 public class Producto {
@@ -24,7 +26,7 @@ public class Producto {
     @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
     @Digits(integer = 8, fraction = 2, message = "El precio debe tener hasta 8 dígitos enteros y 2 decimales")
     @Column(nullable = false, precision = 10, scale = 2)
-    private Double precio;
+    private BigDecimal precio;
 
     @Size(max = 50, message = "La categoría no puede tener más de 50 caracteres")
     @Column(length = 50)
@@ -54,7 +56,7 @@ public class Producto {
         leve, moderado, avanzado
     }
 
-    public Producto(Long id, String titulo, String descripcion, Double precio, String categoria, Nivel nivel, String edadRecomendada, String imagenUrl) {
+    public Producto(Long id, String titulo, String descripcion, BigDecimal precio, String categoria, Nivel nivel, String edadRecomendada, String imagenUrl) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -89,11 +91,11 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public Double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
