@@ -34,7 +34,7 @@ public class Producto {
     // Le estamos diciendo a JPA que guarde el valor del enum como texto
     // (por ejemplo, "leve", "moderado", "avanzado") en la base de datos, y no como
     // su posición (ordinal).
-    
+
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
     private Nivel nivel;
