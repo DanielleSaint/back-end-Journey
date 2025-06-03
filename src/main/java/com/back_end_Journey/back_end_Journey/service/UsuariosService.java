@@ -1,6 +1,6 @@
 package com.back_end_Journey.back_end_Journey.service;
 
-import com.back_end_Journey.back_end_Journey.model.usuarios;
+import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import com.back_end_Journey.back_end_Journey.repository.iUsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +18,17 @@ public class UsuariosService implements iUsuariosService {
     }
 
     @Override
-    public List<usuarios> obtenerTodos() {
+    public List<Usuarios> obtenerTodos() {
         return usuariosRepository.findAll();
     }
 
     @Override
-    public usuarios obtenerPorId(Integer id) {
+    public Usuarios obtenerPorId(Integer id) {
         return usuariosRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void guardarUsuario(usuarios usuario) {
+    public void guardarUsuario(Usuarios usuario) {
         usuariosRepository.save(usuario);
     }
 
@@ -41,8 +41,8 @@ public class UsuariosService implements iUsuariosService {
     }
 
     @Override
-    public void actualizarUsuario(Integer id, usuarios usuarioActualizado) {
-        usuarios existente = usuariosRepository.findById(id)
+    public void actualizarUsuario(Integer id, Usuarios usuarioActualizado) {
+        Usuarios existente = usuariosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("El usuario con ID " + id + " no existe"));
 
         existente.setCorreo(usuarioActualizado.getCorreo());
@@ -55,7 +55,7 @@ public class UsuariosService implements iUsuariosService {
     }
 
     @Override
-    public usuarios obtenerPorCorreo(String correo) {
+    public Usuarios obtenerPorCorreo(String correo) {
         return usuariosRepository.findByCorreo(correo);
     }
 }

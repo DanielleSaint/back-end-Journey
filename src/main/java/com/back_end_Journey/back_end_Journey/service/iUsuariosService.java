@@ -1,13 +1,13 @@
 package com.back_end_Journey.back_end_Journey.service;
 
-import com.back_end_Journey.back_end_Journey.model.usuarios;
+import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import java.util.List;
 
 public interface iUsuariosService {
-    List<usuarios> obtenerTodos();
-    usuarios obtenerPorId(Integer id);
-    void guardarUsuario(usuarios usuario);
+    List<Usuarios> obtenerTodos();
+    Usuarios obtenerPorId(Integer id);
+    void guardarUsuario(Usuarios usuario);
     void eliminarUsuario(Integer id);
-    void actualizarUsuario(Integer id, usuarios usuarioActualizado);
-    usuarios obtenerPorCorreo(String correo);
+    void actualizarUsuario(Integer id, Usuarios usuarioActualizado);
+    Usuarios obtenerPorCorreo(String correo);
 }

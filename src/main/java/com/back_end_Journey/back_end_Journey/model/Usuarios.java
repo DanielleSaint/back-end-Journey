@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usuarios")
-public class usuarios {
+@Table(name = "Usuarios")
+public class Usuarios {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +29,10 @@ public class usuarios {
     }
 
     // Constructor vacío
-    public usuarios() {}
+    public Usuarios() {}
 
     // Constructor con campos
-    public usuarios(String correo, String contrasena, String nombre, String telefono, Rol rol) {
+    public Usuarios(String correo, String contrasena, String nombre, String telefono, Rol rol) {
         this.correo = correo;
         this.contrasena = contrasena;
         this.nombre = nombre;

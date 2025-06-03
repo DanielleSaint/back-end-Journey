@@ -1,6 +1,6 @@
 package com.back_end_Journey.back_end_Journey.controller;
 
-import com.back_end_Journey.back_end_Journey.model.usuarios;
+import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import com.back_end_Journey.back_end_Journey.service.iUsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,22 +15,22 @@ public class UsuariosController {
     private iUsuariosService usuariosService;
 
     @GetMapping
-    public List<usuarios> listarUsuarios() {
+    public List<Usuarios> listarUsuarios() {
         return usuariosService.obtenerTodos();
     }
 
     @PostMapping
-    public void crearUsuario(@RequestBody usuarios usuario) {
+    public void crearUsuario(@RequestBody Usuarios usuario) {
         usuariosService.guardarUsuario(usuario);
     }
 
     @GetMapping("/{id}")
-    public usuarios obtenerPorId(@PathVariable Integer id) {
+    public Usuarios obtenerPorId(@PathVariable Integer id) {
         return usuariosService.obtenerPorId(id);
     }
 
     @PutMapping("/{id}")
-    public void actualizarUsuario(@PathVariable Integer id, @RequestBody usuarios datos) {
+    public void actualizarUsuario(@PathVariable Integer id, @RequestBody Usuarios datos) {
         usuariosService.actualizarUsuario(id, datos);
     }
 
