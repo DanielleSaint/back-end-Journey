@@ -1,7 +1,7 @@
 package com.back_end_Journey.back_end_Journey.controller;
 
 import com.back_end_Journey.back_end_Journey.model.usuarios;
-import com.back_end_Journey.back_end_Journey.repository.iUsuariosRepository;
+import com.back_end_Journey.back_end_Journey.service.iUsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,39 +12,30 @@ import java.util.List;
 public class UsuariosController {
 
     @Autowired
-    private iUsuariosRepository usuariosRepository;
+    private iUsuariosService usuariosService;
 
     @GetMapping
     public List<usuarios> listarUsuarios() {
-        return usuariosRepository.findAll();
+        return usuariosService.obtenerTodos();
     }
 
     @PostMapping
-    public usuarios crearUsuario(@RequestBody usuarios usuario) {
-        return usuariosRepository.save(usuario);
+    public void crearUsuario(@RequestBody usuarios usuario) {
+        usuariosService.guardarUsuario(usuario);
     }
 
     @GetMapping("/{id}")
     public usuarios obtenerPorId(@PathVariable Integer id) {
-        return usuariosRepository.findById(id).orElse(null);
+        return usuariosService.obtenerPorId(id);
     }
 
     @PutMapping("/{id}")
-    public usuarios actualizarUsuario(@PathVariable Integer id, @RequestBody usuarios datos) {
-        usuarios usuario = usuariosRepository.findById(id).orElse(null);
-        if (usuario != null) {
-            usuario.setCorreo(datos.getCorreo());
-            usuario.setContrasena(datos.getContrasena());
-            usuario.setNombre(datos.getNombre());
-            usuario.setTelefono(datos.getTelefono());
-            usuario.setRol(datos.getRol());
-            return usuariosRepository.save(usuario);
-        }
-        return null;
+    public void actualizarUsuario(@PathVariable Integer id, @RequestBody usuarios datos) {
+        usuariosService.actualizarUsuario(id, datos);
     }
 
     @DeleteMapping("/{id}")
     public void eliminarUsuario(@PathVariable Integer id) {
-        usuariosRepository.deleteById(id);
+        usuariosService.eliminarUsuario(id);
     }
 }
