@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 
 @Entity
+@Table(name = "productos")
 public class Producto {
 
     @Id
@@ -54,6 +55,26 @@ public class Producto {
 
     public enum Nivel {
         leve, moderado, avanzado
+    }
+    public enum EdadRecomendada {
+        TRES_CINCO("3-5"),
+        SEIS_OCHO("6-8"),
+        NUEVE_DIEZ("9-10"),
+        TODAS_EDADES("todas-edades");
+
+        private final String descripcion;
+
+        EdadRecomendada(String descripcion) {
+            this.descripcion = descripcion;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+    }
+
+
+    public Producto() {
     }
 
     public Producto(Long id, String titulo, String descripcion, BigDecimal precio, String categoria, Nivel nivel, String edadRecomendada, String imagenUrl) {

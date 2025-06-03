@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "pedidos")
 public class Pedido {
 
     @Id
@@ -15,7 +16,7 @@ public class Pedido {
     // Relación con Usuario (clave foránea)
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    private Usuarios usuarios;
 
     // Fecha del pedido
     @Column(nullable = false)
@@ -31,8 +32,8 @@ public class Pedido {
     private BigDecimal total;
 
     // Relación con PedidoDetalle
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<PedidoDetalle> detalles;
+//    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+//    private List<PedidoDetalle> detalles;
 
     // Enum para el estado
     public enum Estado {
@@ -49,12 +50,12 @@ public class Pedido {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Usuarios getUsuarios() {
+        return usuarios;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuarios(Usuarios usuario) {
+        this.usuarios = usuario;
     }
 
     public LocalDate getFecha() {
@@ -81,11 +82,11 @@ public class Pedido {
         this.total = total;
     }
 
-    public List<PedidoDetalle> getDetalles() {
-        return detalles;
-    }
+//    public List<PedidoDetalle> getDetalles() {
+//        return detalles;
+//    }
 
-    public void setDetalles(List<PedidoDetalle> detalles) {
-        this.detalles = detalles;
-    }
+//    public void setDetalles(List<PedidoDetalle> detalles) {
+//        this.detalles = detalles;
+//    }
 }
