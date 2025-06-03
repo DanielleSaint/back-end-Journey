@@ -40,7 +40,7 @@ public class PedidoService implements IPedidoService{
     public void updatePedido(Long id, Pedido pedidoActualizado) {
         Pedido pedidoExistente = pedidoRepository.findById(id).orElse(null);
         if(pedidoExistente != null){
-            pedidoExistente.setUsuarios(pedidoActualizado.getUsuario());
+            pedidoExistente.setUsuarios(pedidoActualizado.getUsuarios());
             pedidoExistente.setFecha(pedidoActualizado.getFecha());
             pedidoExistente.setEstado(pedidoActualizado.getEstado());
             pedidoExistente.setTotal(pedidoActualizado.getTotal());
