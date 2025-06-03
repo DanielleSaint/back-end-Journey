@@ -2,6 +2,7 @@ package com.back_end_Journey.back_end_Journey.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "pedido_detalle")
 public class PedidoDetalle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

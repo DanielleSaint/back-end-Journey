@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "pedidos")
 public class Pedido {
 
     @Id
@@ -31,8 +32,8 @@ public class Pedido {
     private BigDecimal total;
 
     // Relación con PedidoDetalle
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<PedidoDetalle> detalles;
+//    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+//    private List<PedidoDetalle> detalles;
 
     // Enum para el estado
     public enum Estado {
@@ -81,11 +82,11 @@ public class Pedido {
         this.total = total;
     }
 
-    public List<PedidoDetalle> getDetalles() {
-        return detalles;
-    }
+//    public List<PedidoDetalle> getDetalles() {
+//        return detalles;
+//    }
 
-    public void setDetalles(List<PedidoDetalle> detalles) {
-        this.detalles = detalles;
-    }
+//    public void setDetalles(List<PedidoDetalle> detalles) {
+//        this.detalles = detalles;
+//    }
 }

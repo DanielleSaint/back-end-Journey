@@ -1,0 +1,55 @@
+Usuario
+{
+    "id": 1,
+    "correo": "ana@mail.com",
+    "contrasena": "pass123",
+    "nombre": "Ana Pérez",
+    "telefono": "3001234567",
+    "rol": "cliente",
+    "fechaRegistro": "2025-05-26T16:40:54"
+}
+Productos
+{
+    "id": 1,
+    "titulo": "Cubos de Apilamiento Sensoriales de Madera",
+    "descripcion": "Estos cubos ofrecen experiencias sensoriales variadas mediante texturas (lisa, rugosa, tela suave), colores vibrantes y sonidos suaves como cascabeles. Fomentan la exploración táctil y visual, la coordinación ojo-mano y la comprensión de tamaños y orden. Son ideales para juegos compartidos y construcción de torres.",
+    "precio": 85000,
+    "categoria": "motricidad",
+    "nivel": "leve",
+    "edadRecomendada": "3-5",
+    "imagenUrl": "../assets/imgProductos/leve-Cubos.png"
+}
+PedidoDetalle
+{
+    "id": null,
+    "cantidad": 3,
+    "precio_unitario": 45000,
+    "pedido": {
+    "id": 12,
+    "usuarios": {
+        "id": 3
+    },
+    "fecha": "2025-06-03",
+    "estado": "pendiente",
+    "total": 0
+    },
+    "producto": {
+        "id": 2
+    }
+}
+Pedido
+{
+    "id": 1,
+    "usuarios": {
+        "id": 1,
+        "correo": "ana@mail.com",
+        "contrasena": "pass123",
+        "nombre": "Ana Pérez",
+        "telefono": "3001234567",
+        "rol": "cliente",
+        "fechaRegistro": "2025-05-26T16:40:54"
+    },
+    "fecha": "2024-05-01",
+    "estado": "pendiente",
+    "total": 85000
+ }
