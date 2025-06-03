@@ -15,7 +15,7 @@ public class Pedido {
     // Relación con Usuario (clave foránea)
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    private Usuarios usuarios;
 
     // Fecha del pedido
     @Column(nullable = false)
@@ -49,12 +49,12 @@ public class Pedido {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Usuarios getUsuarios() {
+        return usuarios;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuarios(Usuarios usuario) {
+        this.usuarios = usuario;
     }
 
     public LocalDate getFecha() {
