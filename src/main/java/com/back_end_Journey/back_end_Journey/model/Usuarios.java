@@ -13,7 +13,7 @@ public class Usuarios {
     @Column(nullable = false)
     @NotBlank
     private String correo;
-    @Column(nullable = true)
+    @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasena;
     @Column(nullable = false)

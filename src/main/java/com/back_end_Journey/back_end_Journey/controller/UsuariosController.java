@@ -1,13 +1,11 @@
 package com.back_end_Journey.back_end_Journey.controller;
-import com.back_end_Journey.back_end_Journey.JwtUtil;
+import com.back_end_Journey.back_end_Journey.jwt.JwtUtil;
 import com.back_end_Journey.back_end_Journey.dto.GoogleLoginRequest;
 import com.back_end_Journey.back_end_Journey.dto.LoginRequest;
-import com.back_end_Journey.back_end_Journey.dto.UsuarioLoginResponse;
 import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import com.back_end_Journey.back_end_Journey.service.UsuariosService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -102,7 +100,7 @@ public class UsuariosController {
         if (userDetails == null) {
             Usuarios nuevo = new Usuarios();
             nuevo.setCorreo(request.getCorreo());
-            nuevo.setNombre(request.getNombre());
+//            nuevo.setNombre(request.getNombre());
             nuevo.setProveedor("google");
             nuevo.setRol(Usuarios.Rol.cliente);
             nuevo.setTelefono("0000000000");

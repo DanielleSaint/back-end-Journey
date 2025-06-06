@@ -1,4 +1,4 @@
-package com.back_end_Journey.back_end_Journey;
+package com.back_end_Journey.back_end_Journey.jwt;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

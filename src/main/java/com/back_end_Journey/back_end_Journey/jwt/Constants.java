@@ -1,4 +1,4 @@
-package com.back_end_Journey.back_end_Journey;
+package com.back_end_Journey.back_end_Journey.jwt;
 
 public class Constants {
     public static final String PROVEEDOR_GOOGLE = "google";

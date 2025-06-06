@@ -1,4 +1,4 @@
-package com.back_end_Journey.back_end_Journey;
+package com.back_end_Journey.back_end_Journey.jwt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

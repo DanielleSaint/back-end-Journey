@@ -1,4 +1,4 @@
-package com.back_end_Journey.back_end_Journey;
+package com.back_end_Journey.back_end_Journey.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

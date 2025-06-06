@@ -1,4 +1,4 @@
-package com.back_end_Journey.back_end_Journey;
+package com.back_end_Journey.back_end_Journey.jwt;
 import com.back_end_Journey.back_end_Journey.service.UsuariosService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

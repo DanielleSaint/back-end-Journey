@@ -1,5 +1,5 @@
 package com.back_end_Journey.back_end_Journey.controller;
-import com.back_end_Journey.back_end_Journey.JwtUtil;
+import com.back_end_Journey.back_end_Journey.jwt.JwtUtil;
 import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import com.back_end_Journey.back_end_Journey.service.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;

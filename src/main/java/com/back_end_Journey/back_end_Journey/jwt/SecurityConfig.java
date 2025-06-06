@@ -1,4 +1,4 @@
-package com.back_end_Journey.back_end_Journey;
+package com.back_end_Journey.back_end_Journey.jwt;
 import com.back_end_Journey.back_end_Journey.service.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +38,12 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/{id}").permitAll()
                     .requestMatchers(HttpMethod.PUT, "/{id}").permitAll()
                     .requestMatchers(HttpMethod.DELETE, "/{id}").permitAll()
-                    .requestMatchers("/auth/login", "/auth/register", "/usuarios/login", "/usuarios/login-google").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/{id}").permitAll()
+                    .requestMatchers(
+                            "/auth/login",
+                            "/auth/register",
+                            "/usuarios/login",
+                            "/usuarios/login-google").permitAll()
                     .anyRequest().authenticated())
                     .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

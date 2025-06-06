@@ -7,8 +7,8 @@ public class GoogleLoginRequest {
     @NotBlank(message = "El correo es obligatorio")
     @Email(message = "Formato de correo inválido")
     private String correo;
-    @NotBlank(message = "El nombre es obligatorio")
-    private String nombre;
+//    @NotBlank(message = "El nombre es obligatorio")
+//    private String nombre;
     @NotBlank(message = "La contraseña es obligatoria")
     private String contrasena;
 
@@ -20,13 +20,13 @@ public class GoogleLoginRequest {
         this.correo = correo;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+//    public String getNombre() {
+//        return nombre;
+//    }
+//
+//    public void setNombre(String nombre) {
+//        this.nombre = nombre;
+//    }
 
     public String getContrasena() {
         return contrasena;
