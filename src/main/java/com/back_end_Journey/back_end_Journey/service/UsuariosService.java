@@ -1,10 +1,9 @@
 package com.back_end_Journey.back_end_Journey.service;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import com.back_end_Journey.back_end_Journey.repository.iUsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -16,6 +15,9 @@ public class UsuariosService implements iUsuariosService {
     public UsuariosService(iUsuariosRepository usuariosRepository) {
         this.usuariosRepository = usuariosRepository;
     }
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder; //Encriptar contraseña
 
     @Override
     public List<Usuarios> obtenerTodos() {
@@ -29,6 +31,14 @@ public class UsuariosService implements iUsuariosService {
 
     @Override
     public void guardarUsuario(Usuarios usuario) {
+        if (usuariosRepository.findByCorreo(usuario.getCorreo()) != null) {
+            throw new RuntimeException("Ya existe un usuario con ese correo");
+        }
+        if ("google".equals(usuario.getProveedor())) {
+            usuario.setContrasena(null);
+        } else {
+            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        }
         usuariosRepository.save(usuario);
     }
 
@@ -46,7 +56,9 @@ public class UsuariosService implements iUsuariosService {
                 .orElseThrow(() -> new RuntimeException("El usuario con ID " + id + " no existe"));
 
         existente.setCorreo(usuarioActualizado.getCorreo());
-        existente.setContrasena(usuarioActualizado.getContrasena());
+        if (usuarioActualizado.getContrasena() != null && !usuarioActualizado.getContrasena().isBlank()) {
+            existente.setContrasena(passwordEncoder.encode(usuarioActualizado.getContrasena()));
+        }
         existente.setNombre(usuarioActualizado.getNombre());
         existente.setTelefono(usuarioActualizado.getTelefono());
         existente.setRol(usuarioActualizado.getRol());
@@ -57,5 +69,14 @@ public class UsuariosService implements iUsuariosService {
     @Override
     public Usuarios obtenerPorCorreo(String correo) {
         return usuariosRepository.findByCorreo(correo);
+    }
+
+    @Override
+    public boolean validarCredenciales(String correo, String contrasena) {
+        Usuarios usuario = usuariosRepository.findByCorreo(correo);
+        if (usuario == null || usuario.getContrasena() == null) {
+            return false;
+        }
+        return passwordEncoder.matches(contrasena, usuario.getContrasena());
     }
 }

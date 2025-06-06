@@ -1,5 +1,4 @@
 package com.back_end_Journey.back_end_Journey.service;
-
 import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import java.util.List;
 
@@ -10,4 +9,5 @@ public interface iUsuariosService {
     void eliminarUsuario(Integer id);
     void actualizarUsuario(Integer id, Usuarios usuarioActualizado);
     Usuarios obtenerPorCorreo(String correo);
+    boolean validarCredenciales(String correo, String contrasena);
 }

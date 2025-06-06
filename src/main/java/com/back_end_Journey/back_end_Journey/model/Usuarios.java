@@ -1,6 +1,7 @@
 package com.back_end_Journey.back_end_Journey.model;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,17 +10,28 @@ public class Usuarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(nullable = false)
+    @NotBlank
     private String correo;
+    @Column(nullable = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasena;
+    @Column(nullable = false)
+    @NotBlank
     private String nombre;
+    @Column(nullable = true)
     private String telefono;
-
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Rol rol;
-
+    @Column(name = "proveedor")
+    private String proveedor;
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
+    @PrePersist
+    public void prePersist() {
+        this.fechaRegistro = LocalDateTime.now();
+    }
 
     // Enum Rol incluido dentro de la clase
     public enum Rol {
@@ -37,7 +49,6 @@ public class Usuarios {
         this.nombre = nombre;
         this.telefono = telefono;
         this.rol = rol;
-        this.fechaRegistro = LocalDateTime.now();
     }
 
     // Getters y Setters
@@ -96,5 +107,13 @@ public class Usuarios {
 
     public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
     }
 }
