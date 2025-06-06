@@ -47,6 +47,7 @@ public class ProductoService implements IProductoService{
                 .orElseThrow(() -> new RuntimeException("La publicación con ID " + id + " no existe"));
 
         existente.setTitulo(productoActualizado.getTitulo());
+        existente.setDescripcion(productoActualizado.getDescripcion());
         existente.setPrecio(productoActualizado.getPrecio());
         existente.setCategoria(productoActualizado.getCategoria());
         existente.setNivel(productoActualizado.getNivel());
