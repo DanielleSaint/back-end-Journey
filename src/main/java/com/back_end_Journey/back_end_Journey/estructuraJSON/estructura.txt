@@ -1,3 +1,13 @@
+USUARIO ADMIN
+{
+    "nombre": "admin",
+    "correo": "admin@admin.com",
+    "contrasena": "123",
+    "telefono": "3001234567",
+    "rol": "admin",
+    "proveedor": "local"
+}
+
 Usuario
 {
     "id": 1,

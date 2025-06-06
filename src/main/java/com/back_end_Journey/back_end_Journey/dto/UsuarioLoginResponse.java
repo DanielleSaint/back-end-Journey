@@ -6,14 +6,16 @@ public class UsuarioLoginResponse {
     private String correo;
     private String rol;
     private String proveedor;
+    private String token;
 
     // Constructor
-    public UsuarioLoginResponse(Integer id, String nombre, String correo, String rol, String proveedor) {
+    public UsuarioLoginResponse(Integer id, String nombre, String correo, String rol, String proveedor, String token) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
         this.rol = rol;
         this.proveedor = proveedor;
+        this.token = token;
     }
 
     // Getters y setters

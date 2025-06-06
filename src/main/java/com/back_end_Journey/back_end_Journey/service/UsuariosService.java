@@ -1,23 +1,28 @@
 package com.back_end_Journey.back_end_Journey.service;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import com.back_end_Journey.back_end_Journey.repository.iUsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UsuariosService implements iUsuariosService {
+public class UsuariosService implements iUsuariosService , UserDetailsService {
 
     private final iUsuariosRepository usuariosRepository;
-
-    @Autowired
-    public UsuariosService(iUsuariosRepository usuariosRepository) {
-        this.usuariosRepository = usuariosRepository;
-    }
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder; //Encriptar contraseña
+
+    @Autowired
+    public UsuariosService(iUsuariosRepository usuariosRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.usuariosRepository = usuariosRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<Usuarios> obtenerTodos() {
@@ -37,10 +42,30 @@ public class UsuariosService implements iUsuariosService {
         if ("google".equals(usuario.getProveedor())) {
             usuario.setContrasena(null);
         } else {
-            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+            usuario.setNombre(usuario.getNombre());
+            if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
+                usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+            } else {
+                throw new RuntimeException("Introduce una contraseña válida");
+            }
         }
         usuariosRepository.save(usuario);
     }
+
+    // Mét0do de carga de usuario implementado desde UserDetailsService
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuarios user = usuariosRepository.findByCorreo(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Correo no encontrado");
+        }
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRol().toString().toUpperCase()));
+        return new org.springframework.security.core.userdetails.User(
+                user.getCorreo(),
+                user.getContrasena() != null ? user.getContrasena() : "",
+                authorities
+        );
+    } // revisar con la profe
 
     @Override
     public void eliminarUsuario(Integer id) {
@@ -78,5 +103,5 @@ public class UsuariosService implements iUsuariosService {
             return false;
         }
         return passwordEncoder.matches(contrasena, usuario.getContrasena());
-    }
+    } // Revisar con la profe
 }
