@@ -1,0 +1,55 @@
+name: Deploy to AWS App Runner
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build JAR with Maven
+        run: mvn clean package -DskipTests
+
+      - name: Rename JAR for deployment
+        run: cp target/backend-0.0.1-SNAPSHOT.jar target/app.jar
+
+      - name: Confirm JAR exists
+        run: ls -l target && test -f target/app.jar
+
+      - name: Build Docker image (no cache)
+        run: |
+          docker build --no-cache -t ${{ secrets.ECR_REPOSITORY_URI }}:latest .
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ secrets.ECR_REPOSITORY_URI }}:latest
+
+      - name: Trigger App Runner deployment (start-deployment)
+        run: |
+          aws apprunner start-deployment \
+          --service-arn ${{ secrets.APP_RUNNER_SERVICE_ARN }}
