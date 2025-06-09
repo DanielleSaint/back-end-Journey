@@ -37,7 +37,7 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: Rename JAR for deployment
-        run: cp target/backend-0.0.1-SNAPSHOT.jar target/app.jar
+        run: cp target/back-end-Journey-0.0.1-SNAPSHOT.jar target/app.jar
 
       - name: Confirm JAR exists
         run: ls -l target && test -f target/app.jar
