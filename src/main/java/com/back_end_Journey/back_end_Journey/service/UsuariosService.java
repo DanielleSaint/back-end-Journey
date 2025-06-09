@@ -39,15 +39,11 @@ public class UsuariosService implements iUsuariosService , UserDetailsService {
         if (usuariosRepository.findByCorreo(usuario.getCorreo()) != null) {
             throw new RuntimeException("Ya existe un usuario con ese correo");
         }
-        if ("google".equals(usuario.getProveedor())) {
-            usuario.setContrasena(null);
+        usuario.setNombre(usuario.getNombre());
+        if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
+            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         } else {
-            usuario.setNombre(usuario.getNombre());
-            if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
-                usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
-            } else {
-                throw new RuntimeException("Introduce una contraseña válida");
-            }
+            throw new RuntimeException("Introduce una contraseña válida");
         }
         usuariosRepository.save(usuario);
     }
@@ -65,7 +61,7 @@ public class UsuariosService implements iUsuariosService , UserDetailsService {
                 user.getContrasena() != null ? user.getContrasena() : "",
                 authorities
         );
-    } // revisar con la profe
+    }
 
     @Override
     public void eliminarUsuario(Integer id) {
@@ -103,5 +99,5 @@ public class UsuariosService implements iUsuariosService , UserDetailsService {
             return false;
         }
         return passwordEncoder.matches(contrasena, usuario.getContrasena());
-    } // Revisar con la profe
+    }
 }

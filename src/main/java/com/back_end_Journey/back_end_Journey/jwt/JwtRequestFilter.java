@@ -28,7 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Permitir solicitudes a endpoints públicos sin verificación de token
         String path = request.getRequestURI();
         if (path.equals("/auth/login") || path.equals("/auth/register") ||
-                path.equals("/usuarios/login") || path.equals("/usuarios/login-google") ||
+                path.equals("/auth/login-google") ||
                 path.equals("/usuarios") && request.getMethod().equals("POST") ||
                 path.equals("/{id}") && request.getMethod().equals("GET") ||
                 path.equals("/{id}") && request.getMethod().equals("PUT") ||

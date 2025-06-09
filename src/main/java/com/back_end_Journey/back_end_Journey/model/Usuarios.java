@@ -40,7 +40,7 @@ public class Usuarios {
     }
 
     // Constructor vacío
-    public Usuarios() {}
+//    public Usuarios() {}
 
     // Constructor con campos
     public Usuarios(String correo, String contrasena, String nombre, String telefono, Rol rol) {

@@ -42,8 +42,7 @@ public class SecurityConfig {
                     .requestMatchers(
                             "/auth/login",
                             "/auth/register",
-                            "/usuarios/login",
-                            "/usuarios/login-google").permitAll()
+                            "/auth/login-google").permitAll()
                     .anyRequest().authenticated())
                     .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
