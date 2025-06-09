@@ -1,12 +1,13 @@
-name: Deploy to AWS App Runner
+name: Deploy to AWS App Runner 
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "developfinal" ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
 
     steps:
       - name: Checkout source code
