@@ -1,103 +1,49 @@
 package com.back_end_Journey.back_end_Journey.service;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.back_end_Journey.back_end_Journey.model.Usuarios;
 import com.back_end_Journey.back_end_Journey.repository.iUsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
-public class UsuariosService implements iUsuariosService , UserDetailsService {
-
-    private final iUsuariosRepository usuariosRepository;
-    private BCryptPasswordEncoder passwordEncoder; //Encriptar contraseña
+public class UsuariosService {
 
     @Autowired
-    public UsuariosService(iUsuariosRepository usuariosRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.usuariosRepository = usuariosRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private iUsuariosRepository usuarioRepository;
 
-    @Override
-    public List<Usuarios> obtenerTodos() {
-        return usuariosRepository.findAll();
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    @Override
-    public Usuarios obtenerPorId(Integer id) {
-        return usuariosRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public void guardarUsuario(Usuarios usuario) {
-        if (usuariosRepository.findByCorreo(usuario.getCorreo()) != null) {
-            throw new RuntimeException("Ya existe un usuario con ese correo");
+    public Usuarios registrarUsuario(Usuarios usuario) {
+        // Verificar si el usuario ya existe
+        if (usuarioRepository.findByCorreo(usuario.getCorreo()) != null) {
+            throw new RuntimeException("El usuario ya existe");
         }
-        usuario.setNombre(usuario.getNombre());
-        if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
-            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
-        } else {
-            throw new RuntimeException("Introduce una contraseña válida");
+        // Establecer rol por defecto si no se especifica
+        if (usuario.getRol() == null) {
+            usuario.setRol(Usuarios.Rol.cliente);
         }
-        usuariosRepository.save(usuario);
+        // Guardar el usuario
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        return usuarioRepository.save(usuario);
     }
 
-    // Mét0do de carga de usuario implementado desde UserDetailsService
+    public Usuarios loginUsuario(String correo, String contrasena) {
+        Usuarios usuario = usuarioRepository.findByCorreo(correo);
+        if (usuario == null || !usuario.getContrasena().equals(contrasena)) {
+            throw new RuntimeException("Credenciales incorrectas");
+        }
+        return usuario;
+    }
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuarios user = usuariosRepository.findByCorreo(username);
+        Usuarios user = usuarioRepository.findByCorreo(username);
         if (user == null) {
-            throw new UsernameNotFoundException("Correo no encontrado");
+            throw new UsernameNotFoundException("Usuario no encontrado");
         }
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRol().toString().toUpperCase()));
-        return new org.springframework.security.core.userdetails.User(
-                user.getCorreo(),
-                user.getContrasena() != null ? user.getContrasena() : "",
-                authorities
-        );
-    }
-
-    @Override
-    public void eliminarUsuario(Integer id) {
-        if (!usuariosRepository.existsById(id)) {
-            throw new RuntimeException("El usuario con ID " + id + " no existe");
-        }
-        usuariosRepository.deleteById(id);
-    }
-
-    @Override
-    public void actualizarUsuario(Integer id, Usuarios usuarioActualizado) {
-        Usuarios existente = usuariosRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("El usuario con ID " + id + " no existe"));
-
-        existente.setCorreo(usuarioActualizado.getCorreo());
-        if (usuarioActualizado.getContrasena() != null && !usuarioActualizado.getContrasena().isBlank()) {
-            existente.setContrasena(passwordEncoder.encode(usuarioActualizado.getContrasena()));
-        }
-        existente.setNombre(usuarioActualizado.getNombre());
-        existente.setTelefono(usuarioActualizado.getTelefono());
-        existente.setRol(usuarioActualizado.getRol());
-
-        usuariosRepository.save(existente);
-    }
-
-    @Override
-    public Usuarios obtenerPorCorreo(String correo) {
-        return usuariosRepository.findByCorreo(correo);
-    }
-
-    @Override
-    public boolean validarCredenciales(String correo, String contrasena) {
-        Usuarios usuario = usuariosRepository.findByCorreo(correo);
-        if (usuario == null || usuario.getContrasena() == null) {
-            return false;
-        }
-        return passwordEncoder.matches(contrasena, usuario.getContrasena());
+        return new org.springframework.security.core.userdetails.User(user.getCorreo(), user.getContrasena(), new ArrayList<>());
     }
 }
