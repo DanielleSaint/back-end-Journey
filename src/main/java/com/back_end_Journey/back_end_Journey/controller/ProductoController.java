@@ -43,7 +43,7 @@ public class ProductoController {
             @RequestParam("categoria") String categoria,
             @RequestParam("nivel") String nivel,
             @RequestParam("edadRecomendada") String edadRecomendada,
-            @RequestParam("imagen") MultipartFile imagen
+            @RequestParam("imagenUrl") MultipartFile imagen
     ) {
         // Aquí debes crear el objeto Producto y guardar la imagen como corresponda
         Producto producto = new Producto();
