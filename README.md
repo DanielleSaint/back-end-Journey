@@ -77,7 +77,3 @@ Bienvenido a nuestra plataforma de e-commerce especializada en productos didáct
 </sub>
 </a>
 
-
-<p align="center">
-<img src="./assets/images/BLUET.png" width=400px>
-</p>
