@@ -1,7 +1,3 @@
-<p align="center">
-<img src="./assets/images/logo1.png" width="60%;" alt="journey"/>
-</p>
-
 
 # Proyecto Ecomerce Journey 🐋
 
